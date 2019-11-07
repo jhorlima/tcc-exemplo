@@ -39,7 +39,7 @@ services:
   composer:
     restart: 'no'
     image: composer/composer:php7
-#    command: "create-project jhorlima/agenda-contatos"
-    command: update
+    command: "create-project jhorlima/agenda-contatos"
+#    command: update
     volumes:
       - ./plugin:/app/agenda-contatos
