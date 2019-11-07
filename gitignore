@@ -1,0 +1,4 @@
+plugin/vendor
+plugin/composer.lock
+mysql/data
+.idea

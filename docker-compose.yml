@@ -1,0 +1,45 @@
+version: '3.1'
+services:
+  wordpress:
+    build: wordpress
+    restart: always
+    expose:
+      - "9000"
+    ports:
+      - "80:80"
+      - "35729:35729"
+      - "9876:9876"
+    environment:
+      WORDPRESS_DB_PASSWORD: 12qwaszx
+      PHP_XDEBUG_ENABLED: 1
+      XDEBUG_CONFIG: remote_host=10.0.75.1
+    working_dir: /var/www/html
+    volumes:
+      - ./plugin:/var/www/html/wp-content/plugins/agenda-contatos
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12qwaszx
+    ports:
+      - "3306:3306"
+#    volumes:
+#      - ./mysql/data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    links:
+      - mysql
+  composer:
+    restart: 'no'
+    image: composer/composer:php7
+#    command: "create-project jhorlima/agenda-contatos"
+    command: update
+    volumes:
+      - ./plugin:/app/agenda-contatos
